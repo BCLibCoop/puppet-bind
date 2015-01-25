@@ -147,40 +147,45 @@ key "<%= key %>" {
 <% if !@views.empty? -%>
 
 <% @views.sort_by {|key,value| key}.each do |key,value| -%>
-<% valid_keys = %w(allow-notify allow-query allow-recursion allow-transfer allow-update-forwarding forwarders match-clients match-destinations match-recursive-only) -%>
+<% valid_keys = %w(allow-notify allow-query allow-recursion allow-transfer allow-update allow-update-forwarding also-notify forwarders match-clients match-destinations match-recursive-only) -%>
 view "<%= key %>" {
 <% valid_keys.sort.each do |valid_key| -%>
 <% if value[valid_key] and !value[valid_key].empty? -%>
     <%= valid_key %> { <%= value[valid_key].join('; ') %>; };
 <% end -%>
 <% end -%>
+<% if value['extra_options'] and !value['extra_options'].empty? -%>
+<% value['extra_options'].sort_by {|key, value| key}.each do |key,value| -%>
+    <%= key %> <%= value %>;
+<% end -%><%# value['extra_options'].sort_by.each -%>
+<% end -%><%# value['extra_options'] and !value['extra_options'].empty? -%>
 <% if value['includes'] and !value['includes'].empty? -%>
 <% value['includes'].each do |filename| -%>
     include "<%= filename %>";
-<% end -%>
-<% end -%>
+<% end -%><%# value['includes'].sort_by.each -%>
+<% end -%><%# value['includes'] and !value['includes'].empty? -%>
 <% if value['zones'] and !value['zones'].empty? -%>
     /* View specific zones */
 <% value['zones'].sort_by {|key, value| key}.each do |key,value| -%>
     zone "<%= key %>" IN {
 <% value.each do |line| -%>
         <%= line %>;
-<% end -%>
+<% end -%><%# value.each -%>
     };
 
-<% end -%>
+<% end -%><%# value['zones'].sort_by.each -%>
 <% if !@zones.empty? -%>
     /* Global zones */
 <% @zones.sort_by {|key, value| key}.each do |key,value| -%>
     zone "<%= key %>" IN {
 <% value.each do |line| -%>
         <%= line %>;
-<% end -%>
+<% end -%><%# value.each -%>
     };
 
-<% end -%>
-<% end -%>
-<% end -%>
+<% end -%><%# @zones.sort_by.each -%>
+<% end -%><%# !@zones.empty? -%>
+<% end -%><%# @views.sort_by.each -%>
 };
 <% end -%>
 <% else -%><%# end views, start no views -%>
