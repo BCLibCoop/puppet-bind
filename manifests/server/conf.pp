@@ -53,6 +53,8 @@
 #   Array of IP addrs or ACLs to allow recursion from. Default: empty
 #  $allow_transfer:
 #   Array of IP addrs or ACLs to allow transfer to. Default: empty
+#  $allow_update:
+#   Array of IP addrs or ACLs to updates from. Default: empty
 #  $check_names:
 #   Array of check-names strings. Example: [ 'master ignore' ]. Default: empty
 #  $extra_options:
