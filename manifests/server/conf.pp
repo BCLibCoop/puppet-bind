@@ -7,14 +7,10 @@
 #   Hash of client ACLs, name as key and array of config lines. Default: empty
 #  $masters:
 #   Hash of master ACLs, name as key and array of config lines. Default: empty
-#  $listen_on_port:
-#   IPv4 port to listen on. Set to false to disable. Default: '53'
-#  $listen_on_addr:
-#   Array of IPv4 addresses to listen on. Default: [ '127.0.0.1' ]
-#  $listen_on_v6_port:
-#   IPv6 port to listen on. Set to false to disable. Default: '53'
-#  $listen_on_v6_addr:
-#   Array of IPv6 addresses to listen on. Default: [ '::1' ]
+#  $listen_on:
+#   Hash of IPv4 port (as key) & addresses (as values) to listen on. Set to false to disable. Default: {'53' => [ '127.0.0.1', ]}
+#  $listen_on_v6:
+#   Hash of IPv6 port (as key) & addresses (as values) to listen on. Set to false to disable. Default: {'53' => [ '::1', ]}
 #  $forwarders:
 #   Array of forwarders IP addresses. Default: empty
 #  $directory:
@@ -120,10 +116,8 @@
 define bind::server::conf (
   $acls                   = {},
   $masters                = {},
-  $listen_on_port         = '53',
-  $listen_on_addr         = [ '127.0.0.1' ],
-  $listen_on_v6_port      = '53',
-  $listen_on_v6_addr      = [ '::1' ],
+  $listen_on_port         = {'53' => [ '127.0.0.1', ]},
+  $listen_on_v6_port      = {'53' => [ '::1', ]},
   $forwarders             = [],
   $directory              = $::bind::params::directory,
   $rfc1912zones          = $::bind::params::rfc1912zones,

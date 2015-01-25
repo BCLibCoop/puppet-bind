@@ -37,12 +37,16 @@ statistics-channels {
 <%- end -%>
 
 options {
-<% if @listen_on_port -%>
-    listen-on port <%= @listen_on_port %> { <%= @listen_on_addr.join("; ") %>; };
-<% end -%>
-<% if @listen_on_v6_port -%>
-    listen-on-v6 port <%= @listen_on_v6_port %> { <%= @listen_on_v6_addr.join("; ") %>; };
-<% end -%>
+<% if !@listen_on.empty? -%>
+<% @listen_on.sort_by {|key, value| key}.each do |key,value| -%>
+    listen-on port <%= key %> { <%= value.join("; ") %>; };
+<% end -%><%# @listen_on.sort_by.each -%>
+<% end -%><%# !@listen_on.empty? -%>
+<% if !@listen_on_v6.empty? -%>
+<% @listen_on_v6.sort_by {|key, value| key}.each do |key,value| -%>
+    listen-on-v6 port <%= key %> { <%= value.join("; ") %>; };
+<% end -%><%# @listen_on_v6.sort_by.each -%>
+<% end -%><%# !@listen_on_v6.empty? -%>
 <% if !@forwarders.empty? -%>
     forwarders { <%= @forwarders.join("; ") %>; };
 <% end -%>
