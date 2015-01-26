@@ -154,6 +154,11 @@ view "<%= key %>" {
     <%= valid_key %> { <%= value[valid_key].join('; ') %>; };
 <% end -%>
 <% end -%>
+<% if value['servers'] and !value['servers'].empty? -%>
+<% value['servers'].sort_by {|key, value| key}.each do |key,value| -%>
+    server <%= key %> { <%= value.join("; ") %>; };
+<% end -%><%# value['servers'].sort_by.each -%>
+<% end -%><%# value['servers'] and !value['servers'].empty? -%>
 <% if value['extra_options'] and !value['extra_options'].empty? -%>
 <% value['extra_options'].sort_by {|key, value| key}.each do |key,value| -%>
     <%= key %> <%= value %>;
