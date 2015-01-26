@@ -46,17 +46,17 @@ statistics-channels {
 <%- end -%>
 
 options {
-<% if !@listen_on.empty? -%>
+<% if @listen_on and !@listen_on.empty? -%>
 <% @listen_on.sort_by {|key, value| key}.each do |key,value| -%>
     listen-on port <%= key %> { <%= join_enumerable_fallback(value,'; ') %>; };
 <% end -%><%# @listen_on.sort_by.each -%>
 <% end -%><%# !@listen_on.empty? -%>
-<% if !@listen_on_v6.empty? -%>
+<% if @listen_on_v6 and !@listen_on_v6.empty? -%>
 <% @listen_on_v6.sort_by {|key, value| key}.each do |key,value| -%>
     listen-on-v6 port <%= key %> { <%= join_enumerable_fallback(value,'; ') %>; };
 <% end -%><%# @listen_on_v6.sort_by.each -%>
 <% end -%><%# !@listen_on_v6.empty? -%>
-<% if !@forwarders.empty? -%>
+<% if @forwarders and !@forwarders.empty? -%>
     forwarders { <%= join_enumerable_fallback(@forwarders,'; ') %>; };
 <% end -%>
     directory "<%= @directory %>";
@@ -81,35 +81,35 @@ options {
 <% if @memstatistics_file -%>
     memstatistics-file "<%= @memstatistics_file %>";
 <% end -%>
-<% if !@allow_query.empty? -%>
+<% if @allow_query and !@allow_query.empty? -%>
     allow-query { <%= join_enumerable_fallback(@allow_query,'; ') %>; };
 <% end -%>
-<% if !@allow_query_cache.empty? -%>
+<% if @allow_query_cache and !@allow_query_cache.empty? -%>
     allow-query-cache { <%= join_enumerable_fallback(@allow_query_cache,'; ') %>; };
 <% end -%>
 <% if @recursion -%>
     recursion <%= @recursion %>;
 <% end -%>
-<% if !@allow_recursion.empty? -%>
+<% if @allow_recursion and !@allow_recursion.empty? -%>
     allow-recursion { <%= join_enumerable_fallback(@allow_recursion,'; ') %>; };
 <% end -%>
-<% if !@allow_transfer.empty? -%>
+<% if @allow_transfer and !@allow_transfer.empty? -%>
     allow-transfer { <%= join_enumerable_fallback(@allow_transfer,'; ') %>; };
 <% end -%>
-<% if !@allow_update.empty? -%>
+<% if @allow_update and !@allow_update.empty? -%>
     allow-update { <%= join_enumerable_fallback(@allow_update,'; ') %>; };
 <% end -%>
-<% if !@check_names.empty? -%>
+<% if @check_names and !@check_names.empty? -%>
 <% @check_names.each do |line| -%>
     check-names <%= line %>;
 <% end -%><%# @check_names.each -%>
-<% end -%><%# !@check_names.empty? -%>
+<% end -%><%# @check_names and !@check_names.empty? -%>
 
-<% if !@extra_options.empty? -%>
+<% if @extra_options and !@extra_options.empty? -%>
 <% @extra_options.sort_by {|key, value| key}.each do |key,value| -%>
     <%= key %> <%= value %>;
-<% end -%>
-<% end -%>
+<% end -%><%# @extra_options.each -%>
+<% end -%><%# @extra_options and !@extra_options.empty? -%>
 
 <% if @dnssec_enable -%>
     dnssec-enable <%= @dnssec_enable %>;
@@ -143,16 +143,16 @@ logging {
     };
 };
 <% end -%>
-<% if !@keys.empty? -%>
+<% if @keys and !@keys.empty? -%>
 <% @keys.sort_by {|key, value| key}.each do |key,value| -%>
 key "<%= key %>" {
 <% value.each do |line| -%>
     <%= line %>;
-<% end -%>
+<% end -%><%# value.each -%>
 };
+<% end -%><%# @keys.sort_by.each -%>
+<% end -%><%# @keys and !@keys.empty? -%>
 
-<% end -%>
-<% end -%>
 <% if !@views.empty? -%>
 
 <% @views.sort_by {|key,value| key}.each do |key,value| -%>
@@ -168,8 +168,8 @@ view "<%= key %>" {
 <% valid_keys.sort.each do |valid_key| -%>
 <% if value[valid_key] and !value[valid_key].empty? -%>
     <%= valid_key %> { <%= join_enumerable_fallback(value[valid_key], '; ') %>; };
-<% end -%>
-<% end -%>
+<% end -%><%# value[valid_key] and !value[valid_key].empty? -%>
+<% end -%><%# valid_keys.sort.each -%>
 <% if value['servers'] and !value['servers'].empty? -%>
 <% value['servers'].sort_by {|key, value| key}.each do |key,value| -%>
     server <%= key %> { <%= join_enumerable_fallback(value,'; ') %>; };
