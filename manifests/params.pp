@@ -56,9 +56,9 @@ class bind::params {
     }
   }
 
-  $dump_file          = "$dump_dir/cache_dump.db"
-  $statistics_file    = "$dump_dir/named_stats.txt"
-  $memstatistics_file = "$dump_dir/named_mem_stats.txt"
+  $dump_file          = "${dump_dir}/cache_dump.db"
+  $statistics_file    = "${dump_dir}/named_stats.txt"
+  $memstatistics_file = "${dump_dir}/named_mem_stats.txt"
 
 }
 # vim: set ft=puppet si sts=2 et tw=80 sw=2:
