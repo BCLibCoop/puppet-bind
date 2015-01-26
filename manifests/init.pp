@@ -32,8 +32,8 @@ class bind (
     packagenamesuffix => $packagenamesuffix,
   }
   class { 'bind::service':
-    servicename    => $servicename,
-    service_reload => $service_reload,
+    servicename             => $::bind::params::servicename,
+    service_reload          => $service_reload,
     service_restart_command => $service_restart_command,
   }
 
@@ -43,8 +43,8 @@ class bind (
     false => '/var/log/named',
   }
   file { $bindlogdir:
-    require => Class['bind::package'],
     ensure  => directory,
+    require => Class['bind::package'],
     owner   => $::bind::params::binduser,
     group   => $::bind::params::bindgroup,
     mode    => '0770',
@@ -58,14 +58,14 @@ class bind (
     $content = "//\n// This include file is obsolete.\n// named.conf is Puppet managed as a single file\n//\n"
 
     file { '/etc/bind/named.conf.local':
-      ensure => file,
-      content   => $content,
+      ensure  => file,
+      content => $content,
       require =>  Class['bind::package'],
     }
 
     file { '/etc/bind/named.conf.options':
-      ensure => file,
-      content   => $content,
+      ensure  => file,
+      content => $content,
       require =>  Class['bind::package'],
     }
   }

@@ -177,5 +177,6 @@ define bind::server::conf (
         refreshonly => true;
       }
     }
+    default: {}
   }
 }

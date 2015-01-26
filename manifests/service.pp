@@ -13,10 +13,10 @@ class bind::service (
   }
 
   service { $servicename :
+    ensure    => running,
     require   => Class['bind::package'],
     hasstatus => true,
     enable    => true,
-    ensure    => running,
   }
   
 }
