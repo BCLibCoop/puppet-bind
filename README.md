@@ -105,9 +105,15 @@ bind::server::conf {
       'file "example.com"',
     ],
   },
+  'extra_options' => {
+    'serial-query-rate' => '50',
+  },
   views => {
     'trusted' => {
       'match-clients' => [ '192.168.23.0/24' ],
+      'extra_options' => {
+        'transfer-format' => 'many-answers',
+      },
       'zones' => {
         'myzone.lan' => [
           'type master',
