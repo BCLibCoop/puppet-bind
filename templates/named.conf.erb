@@ -2,6 +2,15 @@
 // named.conf
 // WARNING: Puppet managed, do not edit!
 //
+<%
+def join_enumerable_fallback(value, joiner)
+	if value.kind_of?(Enumerable)
+		return value.join(joiner)
+	else
+		return value
+	end
+end
+-%>
 
 <% if !@acls.empty? -%>
 <% @acls.sort_by {|key, value| key}.each do |key,value| -%>
@@ -29,7 +38,7 @@ statistics-channels {
 <% @statistics_channels.each do |stat_channel,stat_channel_settings|-%>
   <%- if stat_channel_settings.is_a?(Hash) -%>
   <%- if stat_channel_settings['listen_address'] and !stat_channel_settings['listen_address'].empty? and stat_channel_settings['listen_port'] and !stat_channel_settings['listen_port'].empty? -%>
-  inet <%=stat_channel_settings['listen_address']%> port <%= stat_channel_settings['listen_port'] %> allow { <%=stat_channel_settings['allow'].join("; ")%>; };
+  inet <%=stat_channel_settings['listen_address']%> port <%= stat_channel_settings['listen_port'] %> allow { <%=stat_channel_settings['allow'].join('; ')%>; };
   <%- end -%>
 <%- end -%>
 <%- end -%>
@@ -39,16 +48,16 @@ statistics-channels {
 options {
 <% if !@listen_on.empty? -%>
 <% @listen_on.sort_by {|key, value| key}.each do |key,value| -%>
-    listen-on port <%= key %> { <%= value.join("; ") %>; };
+    listen-on port <%= key %> { <%= join_enumerable_fallback(value,'; ') %>; };
 <% end -%><%# @listen_on.sort_by.each -%>
 <% end -%><%# !@listen_on.empty? -%>
 <% if !@listen_on_v6.empty? -%>
 <% @listen_on_v6.sort_by {|key, value| key}.each do |key,value| -%>
-    listen-on-v6 port <%= key %> { <%= value.join("; ") %>; };
+    listen-on-v6 port <%= key %> { <%= join_enumerable_fallback(value,'; ') %>; };
 <% end -%><%# @listen_on_v6.sort_by.each -%>
 <% end -%><%# !@listen_on_v6.empty? -%>
 <% if !@forwarders.empty? -%>
-    forwarders { <%= @forwarders.join("; ") %>; };
+    forwarders { <%= join_enumerable_fallback(@forwarders,'; ') %>; };
 <% end -%>
     directory "<%= @directory %>";
 <% if @managed_keys_directory -%>
@@ -73,22 +82,22 @@ options {
     memstatistics-file "<%= @memstatistics_file %>";
 <% end -%>
 <% if !@allow_query.empty? -%>
-    allow-query { <%= @allow_query.join("; ") %>; };
+    allow-query { <%= join_enumerable_fallback(@allow_query,'; ') %>; };
 <% end -%>
 <% if !@allow_query_cache.empty? -%>
-    allow-query-cache { <%= @allow_query_cache.join("; ") %>; };
+    allow-query-cache { <%= join_enumerable_fallback(@allow_query_cache,'; ') %>; };
 <% end -%>
 <% if @recursion -%>
     recursion <%= @recursion %>;
 <% end -%>
 <% if !@allow_recursion.empty? -%>
-    allow-recursion { <%= @allow_recursion.join("; ") %>; };
+    allow-recursion { <%= join_enumerable_fallback(@allow_recursion,'; ') %>; };
 <% end -%>
 <% if !@allow_transfer.empty? -%>
-    allow-transfer { <%= @allow_transfer.join("; ") %>; };
+    allow-transfer { <%= join_enumerable_fallback(@allow_transfer,'; ') %>; };
 <% end -%>
 <% if !@allow_update.empty? -%>
-    allow-update { <%= @allow_update.join("; ") %>; };
+    allow-update { <%= join_enumerable_fallback(@allow_update,'; ') %>; };
 <% end -%>
 <% if !@check_names.empty? -%>
 <% @check_names.each do |line| -%>
@@ -158,12 +167,12 @@ key "<%= key %>" {
 view "<%= key %>" {
 <% valid_keys.sort.each do |valid_key| -%>
 <% if value[valid_key] and !value[valid_key].empty? -%>
-    <%= valid_key %> { <%= value[valid_key].join('; ') %>; };
+    <%= valid_key %> { <%= join_enumerable_fallback(value[valid_key], '; ') %>; };
 <% end -%>
 <% end -%>
 <% if value['servers'] and !value['servers'].empty? -%>
 <% value['servers'].sort_by {|key, value| key}.each do |key,value| -%>
-    server <%= key %> { <%= value.join("; ") %>; };
+    server <%= key %> { <%= join_enumerable_fallback(value,'; ') %>; };
 <% end -%><%# value['servers'].sort_by.each -%>
 <% end -%><%# value['servers'] and !value['servers'].empty? -%>
 <% if value['extra_options'] and !value['extra_options'].empty? -%>
