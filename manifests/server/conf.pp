@@ -160,7 +160,6 @@ define bind::server::conf (
     require => Class['bind::package'],
     notify  => Class['bind::service'],
     content => template('bind/named.conf.erb'),
-    require => Class['bind::package'],
   }
   #set the Debian system apparmor to inclus the working directory
   case $::osfamily {
