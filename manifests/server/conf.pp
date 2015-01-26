@@ -116,8 +116,8 @@
 define bind::server::conf (
   $acls                   = {},
   $masters                = {},
-  $listen_on_port         = {'53' => [ '127.0.0.1', ]},
-  $listen_on_v6_port      = {'53' => [ '::1', ]},
+  $listen_on              = {'53' => [ '127.0.0.1', ]},
+  $listen_on_v6           = {'53' => [ '::1', ]},
   $forwarders             = [],
   $directory              = $::bind::params::directory,
   $rfc1912zones          = $::bind::params::rfc1912zones,

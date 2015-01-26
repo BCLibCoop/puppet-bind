@@ -26,8 +26,8 @@ Here is a typical LAN recursive caching DNS server configuration :
 ```puppet
 include bind
 bind::server::conf { '/etc/named.conf':
-  listen_on_addr    => [ 'any' ],
-  listen_on_v6_addr => [ 'any' ],
+  listen_on         => { 53 => 'any' },
+  listen_on_v6      => { 53 => 'any' },
   forwarders        => [ '8.8.8.8', '8.8.4.4' ],
   allow_query       => [ 'localnets' ],
   zones             => {
