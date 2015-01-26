@@ -14,7 +14,7 @@ class bind::params {
       $hintsfile               = 'named.ca'
       $rfc1912zones            = '/etc/named.rfc1912.zones'
       $zonedir                 = '/var/named'
-	  $service_restart_command = "service ${servicename} reload"
+      $service_restart_command = "service ${servicename} reload"
     }
     'Debian': {
       $packagenameprefix       = 'bind9'
@@ -27,7 +27,7 @@ class bind::params {
       $hintsfile               = undef    # hints included in named.conf.default-zones
       $rfc1912zones            = '/etc/bind/named.conf.default-zones'
       $zonedir                 = '/etc/bind'
-	  $service_restart_command = "service ${servicename} reload"
+      $service_restart_command = "service ${servicename} reload"
     }
     'Freebsd': {
       $packagenameprefix       = 'bind910'
@@ -52,7 +52,7 @@ class bind::params {
       $directory               = '/var/named'
       $dump_dir                = '/var/named/data'
       $zonedir                 = '/var/named'
-	  $service_restart_command = "service ${servicename} reload"
+      $service_restart_command = "service ${servicename} reload"
     }
   }
 
@@ -61,4 +61,4 @@ class bind::params {
   $memstatistics_file = "$dump_dir/named_mem_stats.txt"
 
 }
-
+# vim: set ft=puppet si sts=2 et tw=80 sw=2:
