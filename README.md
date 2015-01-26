@@ -114,6 +114,10 @@ bind::server::conf {
       'extra_options' => {
         'transfer-format' => 'many-answers',
       },
+      'servers' => {
+        '192.168.23.1' => [ 'keys key_foobar1_view_trusted', ],
+        '192.168.23.2' => [ 'keys key_foobar2_view_trusted', ],
+      },
       'zones' => {
         'myzone.lan' => [
           'type master',
