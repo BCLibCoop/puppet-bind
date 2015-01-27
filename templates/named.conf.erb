@@ -142,7 +142,32 @@ logging {
         null;
     };
 };
-<% end -%>
+<% elsif @logging and @logging.kind_of? Hash -%>
+logging {
+<% if @logging['channels'] and !@logging['channels'].empty? -%>
+    /* Channels */
+<% @logging['channels'].sort_by {|key, value| key}.each do |key,value| -%>
+    channel "<%= key %>" {
+<% value.each do |line| -%>
+        <%= line %>;
+<% end -%><%# value.each -%>
+    };
+<% end -%><%# @logging['channels'].sort_by.each -%>
+<% end -%><%# if @logging['channels'] and !@logging['channels'].empty? -%>
+
+<% if @logging['categories'] and !@logging['categories'].empty? -%>
+    /* Categories */
+<% @logging['categories'].sort_by {|key, value| key}.each do |key,value| -%>
+    category "<%= key %>" {
+<% value.each do |line| -%>
+        <%= line %>;
+<% end -%><%# value.each -%>
+    };
+<% end -%><%# @logging['categories'].sort_by.each -%>
+<% end -%><%# if @logging['categories'] and !@logging['categories'].empty? -%>
+
+};
+<% end -%><%# elsif @logging and @logging.kind_of? Hash -%>
 <% if @keys and !@keys.empty? -%>
 <% @keys.sort_by {|key, value| key}.each do |key,value| -%>
 key "<%= key %>" {
@@ -206,9 +231,9 @@ view "<%= key %>" {
 
 <% end -%><%# @zones.sort_by.each -%>
 <% end -%><%# !@zones.empty? -%>
-<% end -%><%# @views.sort_by.each -%>
+<% end -%><%# if value['zones'] and !value['zones'].empty? -%>
 };
-<% end -%>
+<% end -%><%# @views.sort_by.each -%>
 <% else -%><%# end views, start no views -%>
 
 <% if @recursion == 'yes' and @hintsfile -%>
