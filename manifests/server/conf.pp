@@ -140,6 +140,7 @@ define bind::server::conf (
   $allow_recursion        = [],
   $allow_recursion_on     = [],
   $allow_transfer         = [],
+  $allow_update           = [],
   $check_names            = [],
   $extra_options          = {},
   $dnssec_enable          = 'yes',
