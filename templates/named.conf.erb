@@ -84,14 +84,23 @@ options {
 <% if @allow_query and !@allow_query.empty? -%>
     allow-query { <%= join_enumerable_fallback(@allow_query,'; ') %>; };
 <% end -%>
+<% if @allow_query_on and !@allow_query_on.empty? -%>
+    allow-query-on { <%= join_enumerable_fallback(@allow_query_on,'; ') %>; };
+<% end -%>
 <% if @allow_query_cache and !@allow_query_cache.empty? -%>
     allow-query-cache { <%= join_enumerable_fallback(@allow_query_cache,'; ') %>; };
+<% end -%>
+<% if @allow_query_cache_on and !@allow_query_cache_on.empty? -%>
+    allow-query-cache-on { <%= join_enumerable_fallback(@allow_query_cache_on,'; ') %>; };
 <% end -%>
 <% if @recursion -%>
     recursion <%= @recursion %>;
 <% end -%>
 <% if @allow_recursion and !@allow_recursion.empty? -%>
     allow-recursion { <%= join_enumerable_fallback(@allow_recursion,'; ') %>; };
+<% end -%>
+<% if @allow_recursion_on and !@allow_recursion_on.empty? -%>
+    allow-recursion-on { <%= join_enumerable_fallback(@allow_recursion_on,'; ') %>; };
 <% end -%>
 <% if @allow_transfer and !@allow_transfer.empty? -%>
     allow-transfer { <%= join_enumerable_fallback(@allow_transfer,'; ') %>; };
